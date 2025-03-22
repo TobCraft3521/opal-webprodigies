@@ -1,0 +1,38 @@
+import {
+  Bell,
+  CreditCard,
+  FileDuoToneBlack,
+  Home,
+  Settings,
+} from "@/components/icons"
+import { ReactNode } from "react"
+
+export const MENU_ITEMS = (
+  workspaceId: string
+): { title: string; href: string; icon: ReactNode }[] => [
+  {
+    title: "Home",
+    href: `/dashboard/${workspaceId}/home`,
+    icon: <Home />,
+  },
+  {
+    title: "My Library",
+    href: `/dashboard/${workspaceId}`,
+    icon: <FileDuoToneBlack />,
+  },
+  {
+    title: "Notification",
+    href: `/dashboard/${workspaceId}/notifications`,
+    icon: <Bell />,
+  },
+  {
+    title: "Billing",
+    href: `/dashboard/${workspaceId}/billing`,
+    icon: <CreditCard />,
+  },
+  {
+    title: "Settings",
+    href: `/dashboard/${workspaceId}/settings`,
+    icon: <Settings />,
+  },
+]
