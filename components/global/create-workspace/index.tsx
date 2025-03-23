@@ -20,6 +20,8 @@ const CreateWorkpsace = (props: Props) => {
     }
   }
 
+  if (plan?.subscription?.plan === "FREE") return <></>
+
   return (
     <Modal
       title="Create a Workspace"
