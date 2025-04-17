@@ -47,7 +47,7 @@ export const verifyAccessToWorkspace = async (workspaceId: string) => {
 
 export const getWorkspaceFolders = async (workSpaceId: string) => {
   try {
-    const isFolders = await db.folder.findMany({
+    const folders = await db.folder.findMany({
       where: {
         workSpaceId,
       },
@@ -59,10 +59,10 @@ export const getWorkspaceFolders = async (workSpaceId: string) => {
         },
       },
     })
-    if (isFolders && isFolders.length)
+    if (folders && folders.length)
       return {
         status: 200,
-        data: isFolders,
+        data: folders,
       }
 
     return {
@@ -70,6 +70,7 @@ export const getWorkspaceFolders = async (workSpaceId: string) => {
       data: [],
     }
   } catch (error) {
+    console.log(error, "error")
     return {
       status: 403,
       data: [],
@@ -172,5 +173,44 @@ export const createWorkspace = async (name: string) => {
     return {
       status: 400,
     }
+  }
+}
+
+export const renameFolders = async (folderId: string, name: string) => {
+  try {
+    const folder = await db.folder.update({
+      where: {
+        id: folderId,
+      },
+      data: {
+        name,
+      },
+    })
+
+    if (folder) return { status: 200, data: "Folder renamed successfully" }
+    return { status: 400, data: "Folder does not exist" }
+  } catch (error) {
+    return { status: 500, data: "Oops! Failed to rename folder" }
+  }
+}
+
+export const createFolder = async (workspaceId: string) => {
+  try {
+    const isNewFolder = await db.workSpace.update({
+      where: {
+        id: workspaceId,
+      },
+      data: {
+        folders: {
+          create: {
+            name: "New Folder",
+          },
+        },
+      },
+    })
+
+    if (isNewFolder) return { status: 200, data: "Folder created successfully" }
+  } catch (error) {
+    return { status: 500, data: "Oops! Failed to create folder" }
   }
 }
