@@ -26,3 +26,14 @@ export type NotificationProps = {
     }
   }
 }
+
+export type FolderProps = {
+  status: number
+  data: {
+    id: string
+    name: string
+    _count: {
+      videos: number
+    }
+  }
+}
